@@ -31,14 +31,12 @@ int main() {
 		for (auto iter_i = dot.begin(); iter_i != dot.end(); iter_i++) {
 			auto temp_iter_i = iter_i;
 			for (auto iter_j = ++temp_iter_i; iter_j != dot.end(); iter_j++) {
-				if (dot.find(*iter_j + *iter_j - *iter_i) != dot.end()) answer++;
-				//cout << *iter_i << " " << *iter_j << endl;
+				if (dot.count(*iter_j + *iter_j - *iter_i)) answer++;
 			}
 		}
 
 		cout << answer << endl;
 		answer = 0;
-		//cout << endl;
 	}
 
 	return 0;
