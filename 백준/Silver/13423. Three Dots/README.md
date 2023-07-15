@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 2156 KB, 시간: 648 ms
+메모리: 2156 KB, 시간: 628 ms
 
 ### 분류
 
@@ -14,7 +14,7 @@
 
 <p>직선 위에 서로 다른 N개의 점이 찍혀 있다. 점 i의 위치는 X<sub>i</sub>이다. N개의 점 중 3개를 골라 가장 왼쪽에 있는 점을 a, 가운데 있는 점을 b, 가장 오른쪽에 있는 점을 c라고 하자. 각각의 점의 위치는 X<sub>a</sub>, X<sub>b</sub>, X<sub>c</sub>이다. 이때 점 a, b 사이의 거리와 점 b, c사이의 거리가 같으면 세 점의 간격이 같다고 한다. 즉, X<sub>b </sub>- X<sub>a</sub> = X<sub>c </sub>– X<sub>b</sub>일 때 세 점의 간격이 같다. 다음은 N = 5인 경우의 예시이다.</p>
 
-<p style="text-align: center;"><img alt="" src="" style="height:78px; width:500px"></p>
+<p style="text-align: center;"><img alt="" src="https://onlinejudgeimages.s3-ap-northeast-1.amazonaws.com/problem/13423/1.png" style="height:78px; width:500px"></p>
 
 <p>위 예시에서 점의 위치는 각각 -4, -1, 0, 2, 4이다. 이중 -4, -1, 0위치의 세 점을 각각 a, b, c라고 하면 X<sub>b </sub>- X<sub>a</sub> = 3, X<sub>c </sub>– X<sub>b</sub> = 1로 간격이 같지 않다. 그러나 -4, -1, 2 위치의 세 점을 각각 a, b, c라고 하면 X<sub>b </sub>- X<sub>a</sub> = 3, X<sub>c </sub>– X<sub>b</sub> = 3으로 세 점의 간격이 같다. 위 예시에서 간격이 같은 세 점 a, b, c로 가능한 경우는 (-4, -1, 2), (-4, 0, 4), (0, 2, 4)의 3가지가 있다. N개의 점의 위치가 주어졌을 때, 간격이 같은 세 점으로 가능한 경우가 모두 몇 가지 있는지 출력하는 프로그램을 작성하시오.</p>
 
