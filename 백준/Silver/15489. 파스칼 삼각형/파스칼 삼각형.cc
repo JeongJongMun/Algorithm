@@ -24,20 +24,10 @@ int main() {
     for (int i = r - c; i < r - c + w; i++) {
         for (int j = c - 1; (j < c - 1 + w) && (r + w - i - 1 > j); j++) {
             sum += arr[i][j];
-            //cout << arr[i][j] << " ";
         }
-        //cout << endl;
     }
 
     cout << sum;
 
     return 0;
 }
-/*
-0 1 2 3 4 j
-1 y y y y
-2 y y y
-3 y y
-4 y
-i
-*/
