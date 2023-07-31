@@ -1,8 +1,4 @@
 #include <iostream>
-#include <algorithm>
-#include <cmath>
-#include <limits.h>
-#include <vector>
 using namespace std;
 
 int N; // 신호등의 개수
@@ -39,15 +35,3 @@ int main() {
 
     return 0;
 }
-/*
-4 30
-7 13 5
-14 4 4
-15 3 10
-25 1 1
-
-        if (status == 0 ||
-            (status < R + G && status > R)) {
-            answer += gap;
-        }
-*/
