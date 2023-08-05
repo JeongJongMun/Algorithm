@@ -28,13 +28,12 @@ int main()
 	int end = K;
 	int answer = 0;
 	for (; end < N + 1; end++, start++) {
-		//cout << end << " " << start << " " << apple_pie[end] - apple_pie[start] << endl;
 		answer = max(answer, apple_pie[end] - apple_pie[start]);
 	}
-	//cout << endl;
+
+	// 애플 파이를 원형으로 배치한 부분 검사
 	end = 1;
 	for (; start < N; end++, start++) {
-		//cout << end << " " << start << " " << apple_pie[N] - apple_pie[start] + apple_pie[end] << endl;
 		answer = max(answer, apple_pie[N] - apple_pie[start] + apple_pie[end]);
 	}
 
@@ -42,7 +41,3 @@ int main()
 
 	return 0;
 }
-/*
-7 4
-6 7 1 2 3 4 5
-*/
