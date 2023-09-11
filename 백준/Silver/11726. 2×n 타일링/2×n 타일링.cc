@@ -6,7 +6,7 @@
 using namespace std;
 
 int N;
-long long arr[1001];
+int arr[1001];
 
 int main() {
 
