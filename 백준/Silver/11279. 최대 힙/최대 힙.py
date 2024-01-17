@@ -1,7 +1,2 @@
-from heapq import *
-import sys
-
-hp = []
-input()
-for x in map(int, sys.stdin):
-    heappush(hp, -x) if x else print(-heappop(hp) if hp else 0)
+import heapq as H,sys;h=[];input()
+for x in map(int,sys.stdin):H.heappush(h,-x)if x else print(-H.heappop(h)if h else 0)
