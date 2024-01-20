@@ -11,8 +11,7 @@ def DFS(graph: List, start: int) -> List:
         if visited[node] == False:
             visited[node] = True
             answer.append(node)
-            for next_node in graph[node]:
-                stack.append(next_node)
+            stack.extend(reversed(sorted(graph[node])))
     return answer
 
 
@@ -25,8 +24,7 @@ def BFS(graph: List, start: int) -> List:
         if visited[node] == False:
             visited[node] = True
             answer.append(node)
-            for next_node in graph[node]:
-                queue.append(next_node)
+            queue.extend(sorted(graph[node]))
     return answer
 
 v, e, s = map(int, input().split())
@@ -37,8 +35,5 @@ for i in range(e):
     graph[a].append(b)
     graph[b].append(a)
     
-for i in range(len(graph)): graph[i].sort(reverse=True)
 print(*DFS(graph, s))
-
-for i in range(len(graph)): graph[i].sort()
 print(*BFS(graph, s))
