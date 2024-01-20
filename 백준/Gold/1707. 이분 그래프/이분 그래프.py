@@ -28,12 +28,11 @@ def main():
             graph[a].append(b)
             graph[b].append(a)
         
-        flag = True    
+        flag = True
         for i in range(1, v+1):
             color[i] = 1
-            if not visited[i]:
-                if not bfs(graph, visited, color, i):
-                    flag = False       
+            if not visited[i] and not bfs(graph, visited, color, i):
+                flag = False
         print('YES') if flag else print('NO')
     
 if __name__ == '__main__':
