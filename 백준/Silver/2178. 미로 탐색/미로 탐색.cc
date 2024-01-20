@@ -1,54 +1,44 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int N, M;
-bool visited[101][101];
-int maze[101][101];
-int dist[101][101];
+int n, m;
+int graph[100][100];
+int cnt[100][100];
+int dx[] = { 0,0,-1,1 };
+int dy[] = { -1,1,0,0 };
 
-// 동서남북
-int x[4] = { 1, -1, 0, 0 };
-int y[4] = { 0, 0, 1, -1 };
-
-int bfs(int a, int b) {
-	visited[a][b] = true;
-
+void bfs(int i, int j) {
 	queue<pair<int, int>> q;
-	q.emplace(a, b);
+	q.emplace(i, j);
 
 	while (!q.empty()) {
-		pair<int, int> top = q.front();
+		int x = q.front().first;
+		int y = q.front().second;
 		q.pop();
 
 		for (int i = 0; i < 4; i++) {
-			int nx = top.first + x[i];
-			int ny = top.second + y[i];
-			if (!visited[nx][ny] and nx >= 0 and ny >= 0 and nx <= N and ny <= M and maze[nx][ny] == 1) {
+			int nx = x + dx[i];
+			int ny = y + dy[i];
+			if (nx >= 0 and nx < n and ny >= 0 and ny < m and graph[nx][ny] != 0 and cnt[nx][ny] == 0) {
 				q.emplace(nx, ny);
-				visited[nx][ny] = true;
-				dist[nx][ny] = dist[top.first][top.second] + 1;
+				cnt[nx][ny] = cnt[x][y] + 1;
 			}
 		}
 	}
-
-	return dist[N][M];
 }
 
 int main() {
-	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-
-	cin >> N >> M;
-	for (int i = 1; i <= N; i++) {
-		string a;
-		cin >> a;
-		for (int j = 1; j <= M; j++) {
-			maze[i][j] = a[j - 1] - '0';
+	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+	cin >> n >> m;
+	cnt[0][0] = 1;
+	for (int i = 0; i < n; i++) {
+		string s; cin >> s;
+		for (int j = 0; j < m; j++) {
+			graph[i][j] = s[j] - '0';
 		}
 	}
-
-	int answer = bfs(1, 1);
-
-	cout << answer + 1;
+	bfs(0, 0);
+	cout << cnt[n - 1][m - 1] << '\n';
 
 	return 0;
 }
