@@ -27,13 +27,6 @@ def main():
         graph[a].append(b)
     ans = bfs(graph, k, x)
     for idx in ans: print(idx)
-        
-    # ans = [(idx, cost) for idx, cost in enumerate(dist) if cost == k]
-
-    # if ans:
-    #     for idx, _ in ans:
-    #         print(idx)
-    # else: print(-1)
-            
+          
 if __name__ == '__main__':
     main()
