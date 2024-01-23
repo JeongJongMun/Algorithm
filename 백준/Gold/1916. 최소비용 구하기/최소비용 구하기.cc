@@ -1,59 +1,43 @@
 #include <bits/stdc++.h>
 using namespace std;
+vector<pair<int, int>> graph[1001];
 
-
-// 도시의 개수(정점), 버스의 개수(간선)
-int N, M;
-
-// 시작 도시에서 각 도시까지 최단 거리 저장
-vector<int> dists(1001, INT_MAX);
-
-// 버스 정보 (도착 도시, 버스 비용)
-vector<pair<int, int>> bus[1001];
-
-void Dijkstra(int s) {
+int Dijkstra(int start, int end) {
+	vector<int> visited(1001, 0);
+	vector<int> dist(1001, INT_MAX);
+	dist[start] = 0;
 	priority_queue<pair<int, int>> pq;
-	pq.emplace(0, s);
-	dists[s] = 0;
+	pq.emplace(0, start);
 
 	while (!pq.empty()) {
 		int cost = -pq.top().first;
-		int cur = pq.top().second;
+		int node = pq.top().second;
 		pq.pop();
+		if (node == end) break;
 
-		if (dists[cur] < cost)
-			continue;
-
-		for (int i = 0; i < bus[cur].size(); i++) {
-			int next_node = bus[cur][i].first;
-			int next_cost = cost + bus[cur][i].second;
-
-			if (dists[next_node] > next_cost) {
-				dists[next_node] = next_cost;
-				pq.emplace(-next_cost, next_node);
+		visited[node] = 1;
+		for (int i = 0; i < graph[node].size(); i++) {
+			int next_cost = graph[node][i].first;
+			int next_node = graph[node][i].second;
+			if (dist[next_node] > cost + next_cost and !visited[next_node]) {
+				dist[next_node] = cost + next_cost;
+				pq.emplace(-dist[next_node], next_node);
 			}
 		}
 	}
+
+	return dist[end];
 }
 
-
 int main() {
-	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-
-	cin >> N >> M;
-
-
-	for (int i = 0; i < M; i++) {
-		int start, end, cost; cin >> start >> end >> cost;
-		bus[start].emplace_back(end, cost);
+	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+	int v, e; cin >> v >> e;
+	for (int i = 0; i < e; i++) {
+		int a, b, c; cin >> a >> b >> c;
+		graph[a].emplace_back(c, b);
 	}
-
-	int start, end;
-	cin >> start >> end;
-
-	Dijkstra(start);
-
-	cout << dists[end];
+	int start, end; cin >> start >> end;
+	cout << Dijkstra(start, end);
 
 	return 0;
 }
