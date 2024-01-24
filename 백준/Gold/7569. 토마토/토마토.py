@@ -24,7 +24,7 @@ def bfs(tomato, day, m, n, h):
             if nx >= 0 and nx < len(tomato[0][0]) and ny >= 0 and ny < len(tomato[0]) and nz >= 0 and nz < len(tomato) and tomato[nz][ny][nx] == 0:
                 que.append((nx, ny, nz))
                 tomato[nz][ny][nx] = 1
-                day[nz][ny][nx] = day[z][y][x] + 1
+                tomato[nz][ny][nx] = tomato[z][y][x] + 1
                 cnt += 1
 
 def main():
@@ -44,27 +44,11 @@ def main():
 
  
     bfs(tomato, day, m, n, h)
-
-    # for mat in tomato:
-    #     print(*mat, sep='\n')
-    #     print()
-    # for mat in day:
-    #     print(*mat, sep='\n')
-    #     print()
         
     ans = 0
-    for mat in day:
+    for mat in tomato:
         ans = max(ans, (max(map(max, mat))))
     print(ans - 1) if cnt == goal else print(-1)
 
 if __name__ == "__main__":
     main()
-'''
-2 2 3
--1 -1
--1 -1
-1 -1
-0 0
--1 0
--1 0
-'''
