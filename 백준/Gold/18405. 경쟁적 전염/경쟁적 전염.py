@@ -9,7 +9,7 @@ def dfs(graph, n, s):
             if graph[i][j] > 0:
                 heapq.heappush(que, (0, graph[i][j], i, j))
     while que:
-        t, level, y, x = heapq.heappop(que)
+        t, _, y, x = heapq.heappop(que)
         for dx, dy in DIR:
             nx, ny = x + dx, y + dy
             if 0 <= nx < n and 0 <= ny < n and graph[ny][nx] == 0 and t < s:
