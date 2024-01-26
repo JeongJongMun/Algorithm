@@ -3,15 +3,9 @@ input = sys.stdin.readline
     
 def main():
     arr = input().strip().split('-')
-    ans = 0
     
-    plus = arr[0].split('+')
-    for i in plus:
-        ans += int(i)
+    values = [sum(map(int, s.split('+'))) for s in arr]
     
-    for i in range(1, len(arr)):
-        for j in arr[i].split('+'):
-            ans -= int(j)
-    print(ans)
+    print(values[0] - sum(values[1:]))
 if __name__ == "__main__":
     main()
