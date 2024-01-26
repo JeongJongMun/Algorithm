@@ -2,17 +2,15 @@ import sys
 input = sys.stdin.readline
     
 def main():
-    dp = input().strip()
+    arr = input().strip().split('-')
     ans = 0
     
-    temp = dp.split('-')
-    
-    plus = temp[0].split('+')
+    plus = arr[0].split('+')
     for i in plus:
         ans += int(i)
     
-    for i in range(1, len(temp)):
-        for j in temp[i].split('+'):
+    for i in range(1, len(arr)):
+        for j in arr[i].split('+'):
             ans -= int(j)
     print(ans)
 if __name__ == "__main__":
