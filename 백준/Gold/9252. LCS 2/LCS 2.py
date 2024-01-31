@@ -12,22 +12,21 @@ def main():
             else:
                 dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
 
+
+
+
     j, i = len(a), len(b)
-    cur = dp[i][j]
     lcs = ''
     while i > 0 and j > 0:
-        if dp[i - 1][j] == cur:
+        if dp[i][j] == dp[i - 1][j]:
             i -= 1
-            continue
-        elif dp[i][j - 1] == cur:
+        elif dp[i][j] == dp[i][j - 1]:
             j -= 1
-            continue
-        
-        lcs = str(a[j - 1]) + lcs
-        i -= 1
-        j -= 1
-        cur = dp[i][j]
-        
+        else:    
+            lcs = a[j - 1] + lcs
+            i -= 1
+            j -= 1
+    
     print(dp[len(b)][len(a)])
     if lcs: print(lcs)
 
