@@ -3,7 +3,8 @@ using namespace std;
 
 int main() {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-	int N, M, answer = 0; cin >> N >> M;
+	int N, M, answer = 0; 
+	cin >> N >> M;
 
 	vector<int> bluray(N);
 
@@ -17,6 +18,7 @@ int main() {
 		int mid = (left + right) / 2;
 		int bluray_sum = 0;
 		int cnt = 0;
+
 		for (auto i : bluray) {
 			if (bluray_sum + i > mid) {
 				bluray_sum = 0;
@@ -28,13 +30,10 @@ int main() {
 		if (bluray_sum != 0) cnt++;
 
 		if (cnt > M) left = mid + 1;
-		else {
-			right = mid - 1;
-			answer = mid;
-		}
+		else right = mid - 1;
 	}
 
-	cout << answer;
+	cout << left;
 
 	return 0;
 }
