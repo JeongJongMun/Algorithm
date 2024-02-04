@@ -62,22 +62,11 @@ int main() {
 	int ans = min({ 
 		dijkstra(1, goal_1) + dijkstra(goal_1, goal_2) + dijkstra(goal_2, v),
 		dijkstra(1, goal_2) + dijkstra(goal_2, goal_1) + dijkstra(goal_1, v),
-		dijkstra(1, goal_1) + dijkstra(goal_1, goal_2) + dijkstra(goal_2, goal_1) + dijkstra(goal_1, v),
-		dijkstra(1, goal_2) + dijkstra(goal_2, goal_1) + dijkstra(goal_1, goal_2) + dijkstra(goal_2, v)
+		//dijkstra(1, goal_1) + dijkstra(goal_1, goal_2) + dijkstra(goal_2, goal_1) + dijkstra(goal_1, v),
+		//dijkstra(1, goal_2) + dijkstra(goal_2, goal_1) + dijkstra(goal_1, goal_2) + dijkstra(goal_2, v)
 		});
 
 	if (ans >= 1e8) cout << -1;
 	else cout << ans;
 	return 0;
 }
-
-/*
-5 4
-1 4 1
-1 3 1
-3 2 1
-2 5 1
-3 4
-
-5
-*/
