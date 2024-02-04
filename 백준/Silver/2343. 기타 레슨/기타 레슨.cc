@@ -1,21 +1,18 @@
-#include <iostream>
-#include <algorithm>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
-int N, M, answer;
-
 int main() {
-	cin >> N >> M;
+	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+	int N, M, answer; cin >> N >> M;
 
 	vector<int> bluray(N);
-	
+
 	int right = 0;
 	for (int i = 0; i < N; i++) {
 		cin >> bluray[i];
 		right += bluray[i];
 	}
-	
+
 	int left = *max_element(bluray.begin(), bluray.end());
 	int mid;
 	while (left <= right) {
@@ -42,6 +39,5 @@ int main() {
 	}
 
 	cout << answer;
-
 	return 0;
 }
