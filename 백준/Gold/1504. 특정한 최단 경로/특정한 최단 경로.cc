@@ -7,10 +7,6 @@ struct edge {
 
 	edge(int a, int b) : end(a), weight(b) {};
 
-	void print() {
-		cout << '(' << weight << ',' << end << ')' << '\n';
-	}
-
 	bool operator<(const edge& e) const {
 		return weight > e.weight;
 	}
@@ -62,8 +58,6 @@ int main() {
 	int ans = min({ 
 		dijkstra(1, goal_1) + dijkstra(goal_1, goal_2) + dijkstra(goal_2, v),
 		dijkstra(1, goal_2) + dijkstra(goal_2, goal_1) + dijkstra(goal_1, v),
-		//dijkstra(1, goal_1) + dijkstra(goal_1, goal_2) + dijkstra(goal_2, goal_1) + dijkstra(goal_1, v),
-		//dijkstra(1, goal_2) + dijkstra(goal_2, goal_1) + dijkstra(goal_1, goal_2) + dijkstra(goal_2, v)
 		});
 
 	if (ans >= 1e8) cout << -1;
