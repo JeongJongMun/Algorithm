@@ -1,9 +1,7 @@
 import sys
 from collections import deque
-
 input = sys.stdin.readline
 DIR = [(1, 0), (-1, 0), (0, -1), (0, 1)]
-
 
 def bfs(arr, dist, n, m, i, j):
     visited = [[False] * m for _ in range(n)]
@@ -18,7 +16,6 @@ def bfs(arr, dist, n, m, i, j):
                 visited[nx][ny] = True
                 que.append((cost + 1, nx, ny))
 
-    # print("\n".join(" ".join(map(str, row)) for row in dist))
     for i in range(n):
         for j in range(m):
             if arr[i][j] == 1 and dist[i][j] == 0:
@@ -26,7 +23,6 @@ def bfs(arr, dist, n, m, i, j):
             else:
                 print(dist[i][j], end=" ")
         print()
-
 
 def main():
     n, m = map(int, input().split())
