@@ -25,11 +25,11 @@ void bfs(vector<pair<int, int>> start, int n, int m) {
 			int ny = y + DIR[i].second;
 			int nx = x + DIR[i].first;
 
-			if (0 < ny and ny <= n and 0 < nx and nx <= m and tomato[ny][nx] == 0 and day[y][x] + 1 < day[ny][nx]) {
-				if (not visited[ny][nx]) {
-					visited[ny][nx] = true;
-					goal--;
-				}
+			if (0 < ny and ny <= n and 0 < nx and nx <= m and not visited[ny][nx] and tomato[ny][nx] == 0 and day[y][x] + 1 < day[ny][nx]) {
+				//if (not visited[ny][nx]) {
+				visited[ny][nx] = true;
+				goal--;
+				//}
 				day[ny][nx] = day[y][x] + 1;
 				que.emplace(ny, nx);
 			}
