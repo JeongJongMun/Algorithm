@@ -10,6 +10,7 @@ def dijkstra(graph, n):
 
     while hq:
         dist, cur = heappop(hq)
+        if dist > distance[cur]: continue # 예외 처리
         for weight, next_node in graph[cur]:
             next_dist = dist + weight
             if (next_dist < distance[next_node]):
