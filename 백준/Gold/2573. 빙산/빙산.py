@@ -4,7 +4,14 @@ from collections import deque
 
 DIR = [(1, 0), (-1, 0), (0, -1), (0, 1)]
 
-def melt(graph, melting, n, m, i, j):
+# def melt(graph, melting, n, m):
+#     for i, j in melting:
+#         for dx, dy in DIR:
+#             nx, ny = j + dx, i + dy
+#             if 0 <= nx < m and 0 <= ny < n and graph[ny][nx] != 0:
+#                 graph[ny][nx] -= 1
+                
+def melt(graph, melting, n, m):
     for i, j in melting:
         if 0 < i - 1 < n and graph[i - 1][j] != 0:
             graph[i - 1][j] -= 1
@@ -18,7 +25,6 @@ def melt(graph, melting, n, m, i, j):
 
 def bfs(graph, visited, n, m, i, j):
     que = deque([(i, j)])
-
     while que:
         y, x = que.popleft()
         for dx, dy in DIR:
@@ -26,7 +32,6 @@ def bfs(graph, visited, n, m, i, j):
             if 0 <= nx < m and 0 <= ny < n and not visited[ny][nx] and graph[ny][nx] > 0:
                 que.append((ny, nx))
                 visited[ny][nx] = True
-
 
 def main():
     n, m = map(int, input().split())
@@ -38,11 +43,14 @@ def main():
         cnt = 0
         year += 1
         melting = []
+        flag = True
         for i in range(n):
             for j in range(m):
                 if graph[i][j] == 0:
                     melting.append((i, j))
-        melt(graph, melting, n, m, i, j)
+                else:
+                    flag = False
+        melt(graph, melting, n, m)
         
         for i in range(n):
             for j in range(m):
@@ -50,12 +58,10 @@ def main():
                     bfs(graph, visited, n, m, i, j)
                     cnt += 1
                     
-        if cnt >= 2:
-            break
-        if year > 1000:
+        if cnt >= 2 or flag:
             break
                     
-    print(year if year < 1000 else 0)
+    print(year if not flag else 0)
 
 
 if __name__ == "__main__":
