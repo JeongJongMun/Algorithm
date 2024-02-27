@@ -12,12 +12,12 @@ def main():
     alow, ahigh = 0, 0
     
     while low < high:
-        cur = abs(water[low] + water[high])
-        if (cur < m):
-            m = cur
+        cur = water[low] + water[high]
+        if (abs(cur) < m):
+            m = abs(cur)
             alow, ahigh = water[low], water[high]
         
-        if abs(water[low]) > abs(water[high]):
+        if cur < 0:
             low += 1
         else:
             high -= 1
