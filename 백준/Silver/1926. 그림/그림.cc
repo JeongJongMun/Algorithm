@@ -2,7 +2,6 @@
 using namespace std;
 
 int graph[501][501];
-bool visited[501][501];
 int max_area;
 int cnt;
 
@@ -13,19 +12,17 @@ vector<pair<int, int>> dir = {
 	{0, 1}
 };
 
-int dfs(int y, int x, int area) {
-	visited[y][x] = true;
+int dfs(int y, int x) {
+	graph[y][x] = 0;
 	int nx, ny;
-	int size = area;
+	int area = 1;
 	for (int i = 0; i < dir.size(); i++) {
 		nx = x + dir[i].first;
 		ny = y + dir[i].second;
-		if (0 <= nx and nx <= 500 and 0 <= ny and ny <= 500 and not visited[ny][nx] and graph[ny][nx]) {
-			size += dfs(ny, nx, area);
-		}
+		if (0 <= nx and nx <= 500 and 0 <= ny and ny <= 500 and graph[ny][nx])
+			area += dfs(ny, nx);
 	}
-
-	return size;
+	return area;
 }
 
 int main() {
@@ -40,15 +37,14 @@ int main() {
 
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {
-			if (not visited[i][j] and graph[i][j]) {
-				max_area = max(max_area, dfs(i, j, 1));
+			if (graph[i][j]) {
+				max_area = max(max_area, dfs(i, j));
 				cnt++;
 			}
 		}
 	}
 
+	cout << cnt << endl << max_area;
 
-cout << cnt << endl << max_area;
-
-return 0;
+	return 0;
 }
