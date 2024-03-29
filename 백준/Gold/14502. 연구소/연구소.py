@@ -1,4 +1,4 @@
-import sys, copy
+import sys
 from itertools import combinations
 from collections import deque
 input = sys.stdin.readline
@@ -25,7 +25,7 @@ def main():
     emptys = [(i, j) for i in range(n) for j in range(m) if graph[i][j] == 0]
     ans = 0
     for walls in combinations(emptys, 3):
-        _graph = copy.deepcopy(graph)
+        _graph = [row[:] for row in graph]
         for i, j in walls:
             _graph[i][j] = 1
 
