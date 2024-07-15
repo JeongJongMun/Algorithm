@@ -1,22 +1,25 @@
-n = int(input())
-pos = [0] * n # 인덱스 = 열 번호, 값 = 행 번호
-flag_a = [False] * n # 각 행에 퀸을 배치했는지 체크
-flag_b = [False] * (n*2-1) # /
-flag_c = [False] * (n*2-1) # \
-global cnt 
-cnt = 0
+import sys
+sys.setrecursionlimit(10**6)
 
-def set(n: int, i: int) -> None:
+answer = 0
+n = int(input())
+column = [True] * n                  # 열
+diagonal_up = [True] * (2 * n - 1)   # /
+diagonal_down = [True] * (2 * n - 1) # \
+
+def set_queen(i):
+    if i == n:
+        global answer
+        answer += 1
+        return
+    
     for j in range(n):
-        if not flag_a[j] and not flag_b[i + j] and not flag_c[n - 1 - j + i]:
-            pos[i] = j
-            if i == n - 1:
-                global cnt
-                cnt += 1
-            else:
-                flag_a[j] = flag_b[i + j] = flag_c[n - 1 - j + i] = True
-                set(n, i + 1) # 다음 열에 퀸을 배치
-                flag_a[j] = flag_b[i + j] = flag_c[n - 1 - j + i] = False
-                
-set(n, 0)
-print(cnt)
+        if column[j] and diagonal_up[i + j] and diagonal_down[n - 1 + i - j]:
+            column[j] = diagonal_up[i + j] = diagonal_down[n - 1 + i - j] = False
+            set_queen(i + 1)
+            column[j] = diagonal_up[i + j] = diagonal_down[n - 1 + i - j] = True
+
+
+set_queen(0)
+        
+print(answer)
