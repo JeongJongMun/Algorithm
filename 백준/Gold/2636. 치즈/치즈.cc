@@ -1,83 +1,74 @@
 #include <iostream>
-#include <algorithm>
 #include <queue>
 #include <cstring>
 using namespace std;
 
-int N, M;
-int graph[100][100];
-bool visit[100][100];
-int cheeseCount = 0;
-int bfsCount = 0;
+const int MAX = 100;
 const pair<int, int> DIR[4] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
-struct Node
-{
-    int y;
-    int x;
-    Node(int y, int x) : y(y), x(x) {}
-};
+int N, M;
+int graph[MAX][MAX];
+bool visit[MAX][MAX];
 
-int GraphSum()
-{
-    int sum = 0;
-    for (int i = 0; i < N; i++)
-        for (int j = 0; j < M; j++)
-            sum += graph[i][j];
-    
-    return sum;
-}
+int melted = 0;
 
-void Bfs(int y, int x)
+void Bfs()
 {
-    queue<Node> que;
-    que.emplace(y, x);
-    visit[y][x] = true;
-    int temp[100][100];
-    memcpy(temp, graph, sizeof(graph));
-
-    cheeseCount = 0;
-    bfsCount++;
-    while (!que.empty())
+    int time = 0;
+    int lastMelted = 0;
+    while (true)
     {
-        auto [i, j] = que.front(); que.pop();
+        queue<pair<int, int>> que;
+        que.emplace(0, 0);
+        memset(visit, 0, sizeof(visit));
         
-        for (auto [ny, nx] : DIR)
+        visit[0][0] = true;
+        melted = 0;
+        
+        while (!que.empty())
         {
-            int dy = ny + i;
-            int dx = nx + j;
-
-            if (visit[dy][dx]) continue;
-            if (dy > N - 1 or dy < 0 or dx > M - 1 or dx < 0) continue;
+            auto [i, j] = que.front(); que.pop();
             
-            visit[dy][dx] = true;
-            
-            if (graph[dy][dx] == 0)
-                que.emplace(dy, dx);
-            else
+            for (auto [ny, nx] : DIR)
             {
-                temp[dy][dx] = 0;
-                cheeseCount++;
+                int dy = ny + i;
+                int dx = nx + j;
+
+                if (visit[dy][dx]) continue;
+                if (dy > N - 1 or dy < 0 or dx > M - 1 or dx < 0) continue;
+                
+                visit[dy][dx] = true;
+                
+                if (graph[dy][dx] == 0)
+                    que.emplace(dy, dx);
+                else
+                {
+                    graph[dy][dx] = 0;
+                    melted++;
+                }
             }
         }
-    }
-    memcpy(graph, temp, sizeof(temp));
-    memset(visit, 0, sizeof(visit));
 
-    if (GraphSum() == 0)
-        cout << bfsCount << '\n' << cheeseCount << '\n';
-    else
-        Bfs(0, 0);
+        if (melted == 0)
+        {
+            cout << time << '\n' << lastMelted << '\n';
+            break;
+        }
+        lastMelted = melted;
+        time++;
+    }
 }
 
 int main()
 {
+    ios::sync_with_stdio(false); cin.tie(nullptr);
+    
     cin >> N >> M;
     for (int i = 0; i < N; i++)
         for (int j = 0; j < M; j++)
             cin >> graph[i][j];
 
-    Bfs(0, 0);
+    Bfs();
     
     return 0;
 }
