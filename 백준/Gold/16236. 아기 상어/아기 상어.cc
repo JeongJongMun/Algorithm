@@ -21,7 +21,6 @@ struct Node
 
 int N;
 int graph[20][20];
-bool visit[20][20];
 int bulk = 2;
 int eatCnt = 0;
 int ans;
@@ -29,8 +28,10 @@ const pair<int, int> DIR[4] = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
 
 void Bfs(int i, int j)
 {
+    vector visit(N, vector<bool>(N));
     priority_queue<Node> pq;
     queue<Node> que;
+    
     que.emplace(i, j, 0);
     visit[i][j] = true;
 
@@ -43,8 +44,8 @@ void Bfs(int i, int j)
             int ny = y + dy;
             int nx = x + dx;
             
-            if (visit[ny][nx] or graph[ny][nx] > bulk) continue;
             if (ny > N - 1 or ny < 0 or nx > N - 1 or nx < 0) continue;
+            if (visit[ny][nx] or graph[ny][nx] > bulk) continue;
 
             if (graph[ny][nx] < bulk and graph[ny][nx] != 0 and !visit[ny][nx])
                 pq.emplace(ny, nx, dist + 1);
@@ -57,11 +58,10 @@ void Bfs(int i, int j)
     if (!pq.empty())
     {
         auto [ny, nx, dist] = pq.top();
-        memset(visit, false, sizeof(visit));
         graph[ny][nx] = 0;
         ans += dist;
-        eatCnt++;
-        if (eatCnt == bulk)
+        
+        if (++eatCnt == bulk)
         {
             bulk++;
             eatCnt = 0;
