@@ -10,38 +10,36 @@ int main()
     int N; cin >> N;
     vector arr(N, 0);
     vector dp(N, 1);
-    vector<vector<int>> li(N);
+    vector prev(N, -1);
     for (int i = 0; i < N; i++)
     {
         cin >> arr[i];
-        li[i].push_back(arr[i]);
     }
 
     for (int i = 0; i < N; i++)
     {
         for (int j = 0; j < i; j++)
         {
-            if (arr[j] < arr[i])
+            if (arr[j] < arr[i] && dp[i] < dp[j] + 1)
             {
-                if (dp[i] < dp[j] + 1)
-                {
-                    li[i].clear();
-                    for (auto &elem : li[j])
-                        li[i].push_back(elem);
-                    li[i].push_back(arr[i]);
-                }
-                dp[i] = max(dp[i], dp[j] + 1);
+                dp[i] = dp[j] + 1;
+                prev[i] = j;
             }
         }
     }
 
     auto iter = max_element(dp.begin(), dp.end());
     auto idx = iter - dp.begin();
-    sort(li[idx].begin(), li[idx].end());
     
+
+    vector<int> ans;
+    for (int i = idx; i != -1; i = prev[i])
+        ans.push_back(arr[i]);
+    sort(ans.begin(), ans.end());
+
     cout << *iter << '\n';
-    for (auto i : li[idx])
-        cout << i << ' ';
+    for (auto &elem : ans)
+        cout << elem << ' ';
     
     return 0;
 }
