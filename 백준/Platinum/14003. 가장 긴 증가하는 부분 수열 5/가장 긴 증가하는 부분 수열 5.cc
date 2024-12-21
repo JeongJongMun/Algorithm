@@ -8,30 +8,27 @@ int main()
     int N; cin >> N;
     vector<int> arr(N);
     vector<int> dp;
-    vector<int> idx;
-    for (int i = 0; i < N; i++)
-        cin >> arr[i];
+    vector idx(N, 0);
+    
+    for (auto &elem : arr)
+        cin >> elem;
 
     dp.push_back(arr[0]);
-    idx.push_back(0);
     
     for (int i = 1; i < N; i++)
     {
-        if (dp.back() < arr[i])
+        auto iter = lower_bound(dp.begin(), dp.end(), arr[i]);
+        if (iter == dp.end())
         {
-            idx.push_back(dp.size());
+            idx[i] = dp.size();
             dp.push_back(arr[i]);
         }
         else
         {
-            auto it = lower_bound(dp.begin(), dp.end(), arr[i]);
-            auto index = distance(dp.begin(), it);
-            dp[index] = arr[i];
-            idx.push_back(index);
+            idx[i] = iter - dp.begin();
+            *iter = arr[i];
         }
     }
-
-    cout << dp.size() << '\n';
 
     vector<int> ans;
     int target = dp.size() - 1;
@@ -44,6 +41,7 @@ int main()
         }
     }
 
+    cout << dp.size() << '\n';
     for (int i = ans.size() - 1; i >= 0; i--)
         cout << ans[i] << ' ';
     
