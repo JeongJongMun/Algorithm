@@ -6,7 +6,6 @@ using namespace std;
 int main()
 {
     int N; cin >> N;
-    int l, r;
     vector<pair<int, int>> arr(N);
     for (auto &[l, r] : arr)
         cin >> l >> r;
