@@ -7,13 +7,13 @@ int main()
 {
     int N, M; cin >> N >> M;
     N++;
-    vector<int> A(N);
-    vector<int> C(N);
+    
+    vector<int> A(N), C(N);
+    int sumC = 0;
 
     for (int i = 1; i < N; i++)
         cin >> A[i];
 
-    int sumC = 0;
     for (int i = 1; i < N; i++)
     {
         cin >> C[i];
@@ -38,7 +38,7 @@ int main()
     {
         if (dp[i][N - 1] >= M)
         {
-            cout << i << '\n';
+            cout << i;
             break;
         }
     }
