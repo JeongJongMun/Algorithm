@@ -1,44 +1,55 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <iostream>
+#include <vector>
+#include <queue>
 
-int n, m;
-int graph[100][100];
-int cnt[100][100];
-int dx[] = { 0,0,-1,1 };
-int dy[] = { -1,1,0,0 };
+int dx[] = {0, 0, 1, -1};
+int dy[] = {1, -1, 0, 0};
 
-void bfs(int i, int j) {
-	queue<pair<int, int>> q;
-	q.emplace(i, j);
+void bfs(int n, int m, int i, int j, std::vector<std::vector<int>>& adj, std::vector<std::vector<int>>& cnt) 
+{
+    std::queue<std::pair<int, int>> q;
 
-	while (!q.empty()) {
-		int x = q.front().first;
-		int y = q.front().second;
-		q.pop();
+    q.emplace(i, j);
 
-		for (int i = 0; i < 4; i++) {
-			int nx = x + dx[i];
-			int ny = y + dy[i];
-			if (nx >= 0 and nx < n and ny >= 0 and ny < m and graph[nx][ny] != 0 and cnt[nx][ny] == 0) {
-				q.emplace(nx, ny);
-				cnt[nx][ny] = cnt[x][y] + 1;
-			}
-		}
-	}
+    while (!q.empty()) 
+    {
+        int x = q.front().second;
+        int y = q.front().first;
+        q.pop();
+
+        for (int d = 0; d < 4; d++)
+        {
+            int nx = x + dx[d];
+            int ny = y + dy[d];
+
+            if (nx < 0 || nx >= m || ny < 0 || ny >= n || adj[ny][nx] == 0 || cnt[ny][nx] != 0) continue;
+
+            cnt[ny][nx] = cnt[y][x] + 1;
+            q.emplace(ny, nx);
+        }
+    }
 }
 
-int main() {
-	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-	cin >> n >> m;
-	cnt[0][0] = 1;
-	for (int i = 0; i < n; i++) {
-		string s; cin >> s;
-		for (int j = 0; j < m; j++) {
-			graph[i][j] = s[j] - '0';
-		}
-	}
-	bfs(0, 0);
-	cout << cnt[n - 1][m - 1] << '\n';
+int main()
+{
+    int n, m;
+    std::cin >> n >> m;
+    std::vector graph(n, std::vector<int>(m));
+    std::vector cnt(n, std::vector(m, 0));
+    cnt[0][0] = 1;
 
-	return 0;
+    for (int i = 0; i < n; i++)
+    {
+        std::string s;
+        std::cin >> s;
+        for (int j = 0; j < m; j++)
+        {
+            graph[i][j] = s[j] - '0';
+        }
+    }
+
+    bfs(n, m, 0, 0, graph, cnt);
+    std::cout << cnt[n - 1][m - 1];
+    
+    return 0;
 }
