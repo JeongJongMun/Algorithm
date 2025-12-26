@@ -1,32 +1,53 @@
 #include <iostream>
+#include <queue>
 #include <vector>
 
 const long long INF = 1e18;
 
 struct edge
 {
-    int from;
     int to;
     int weight;
 };
 
-bool bellman_ford(int n, int m, std::vector<edge>& edges, std::vector<long long>& dist)
+bool spfa(int n, int m, std::vector<std::vector<edge>>& graph, std::vector<long long>& dist)
 {
-    dist[1] = 0;
+    std::vector count(n + 1, 0);
+    std::vector inQue(n + 1, false);
+    std::queue<int> que;
     
-    for (int i = 1; i <= n; i++)
+    int start = 1;
+    dist[start] = 0;
+    que.push(start);
+    inQue[start] = true;
+    count[start]++;
+    
+    while (!que.empty())
     {
-        for (int j = 0; j < m; j++)
+        int cur = que.front();
+        que.pop();
+        inQue[cur] = false;
+        
+        for (const auto& edge : graph[cur])
         {
-            int from = edges[j].from;
-            int to = edges[j].to;
-            int weight = edges[j].weight;
+            int to = edge.to;
+            int weight = edge.weight;
             
-            if (dist[from] != INF && dist[to] > dist[from] + weight)
+            if (dist[to] > dist[cur] + weight)
             {
-                dist[to] = dist[from] + weight;
+                dist[to] = dist[cur] + weight;
                 
-                if (i == n) return true;
+                if (!inQue[to]) 
+                {
+                    que.push(to);
+                    inQue[to] = true;
+                    count[to]++;
+                
+                    if (count[to] >= n)
+                    {
+                        return true;
+                    }
+                }
             }
         }
     }
@@ -43,15 +64,17 @@ int main()
     int n, m;
     std::cin >> n >> m;
     
-    std::vector<edge> edges(m);
+    std::vector graph(n + 1, std::vector<edge>());
     std::vector dist(n + 1, INF);
     
     for (int i = 0; i < m; i++)
     {
-        std::cin >> edges[i].from >> edges[i].to >> edges[i].weight;
+        int a, b, c;
+        std::cin >> a >> b >> c;
+        graph[a].push_back({b, c});
     }
 
-    if (bellman_ford(n, m, edges, dist))
+    if (spfa(n, m, graph, dist))
     {
         std::cout << -1;
     }
