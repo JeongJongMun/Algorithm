@@ -1,23 +1,28 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
-#include <algorithm>
-using namespace std;
 
 int main()
 {
-    int N; cin >> N;
-    vector<int> arr(N);
-    vector<int> dp;
-    vector idx(N, 0);
-    
-    for (auto &elem : arr)
-        cin >> elem;
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout.tie(nullptr);
 
-    dp.push_back(arr[0]);
+    int n;
+    std::cin >> n;
     
-    for (int i = 1; i < N; i++)
+    std::vector<int> arr(n);
+    std::vector<int> dp;
+    std::vector idx(n, 0);
+    
+    for (auto& elem : arr)
     {
-        auto iter = lower_bound(dp.begin(), dp.end(), arr[i]);
+        std::cin >> elem;
+    }
+    
+    for (int i = 0; i < n; i++)
+    {
+        auto iter = std::lower_bound(dp.begin(), dp.end(), arr[i]);
         if (iter == dp.end())
         {
             idx[i] = dp.size();
@@ -29,21 +34,23 @@ int main()
             *iter = arr[i];
         }
     }
-
-    vector<int> ans;
-    int target = dp.size() - 1;
-    for (int i = N - 1; i >= 0; i--)
+    
+    std::vector<int> ans;
+    int target = dp.size();
+    for (int i = n - 1; i >= 0; i--)
     {
-        if (idx[i] == target)
+        if (idx[i] == target - 1)
         {
             ans.push_back(arr[i]);
             target--;
         }
     }
-
-    cout << dp.size() << '\n';
+    
+    std::cout << dp.size() << "\n";
     for (int i = ans.size() - 1; i >= 0; i--)
-        cout << ans[i] << ' ';
+    {
+        std::cout << ans[i] << " ";
+    }
     
     return 0;
 }
