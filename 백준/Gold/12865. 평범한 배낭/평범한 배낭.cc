@@ -1,31 +1,43 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
-int N, K;
-int W[101], V[101];
-int dp[101][100001]; // [N][K]
+int DP[101][100001] = {};
 
-int main() {
-	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-
-	cin >> N >> K;
-
-	for (int i = 1; i <= N; i++) {
-		cin >> W[i] >> V[i];
-	}
-
-	// K = 최대 무게, limit = 현재 최대 무게
-	for (int limit = 1; limit <= K; limit++) {
-		// N = 물건 개수
-		for (int i = 1; i <= N; i++) {
-			// j번째 물건이 무거워서 못담음
-			if (W[i] > limit) dp[i][limit] = dp[i - 1][limit];
-			// j번째 물건을 담을 수 있음
-			else dp[i][limit] = max(dp[i - 1][limit - W[i]] + V[i], dp[i - 1][limit]);
-		}
-	}
-
-	cout << dp[N][K];
-
-	return 0;
+int main()
+{
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout.tie(nullptr);
+    
+    int n, k;
+    std::cin >> n >> k;
+    
+    std::vector<int> Weight(n + 1);
+    std::vector<int> Value(n + 1);
+    
+    for (int i = 1; i <= n; i++)
+    {
+        std::cin >> Weight[i] >> Value[i];
+    }
+    
+    for (int limit = 1; limit <= k; limit++)
+    {
+        for (int i = 1; i <= n; i++)
+        {
+            if (Weight[i] > limit)
+            {
+                DP[i][limit] = DP[i - 1][limit];
+            }
+            else
+            {
+                DP[i][limit] = std::max(DP[i - 1][limit], DP[i - 1][limit - Weight[i]] + Value[i]);
+            }
+        }
+    }
+    
+    std::cout << DP[n][k];
+    
+    return 0;
 }
+
