@@ -1,12 +1,22 @@
 #include <iostream>
 #include <map>
-#include <climits>
+#define MAX 200000000
 
 struct info
 {
     int nominated = 0;
-    int time = 0;
+    int timestamp = 0;
 };
+
+std::map<int, info> frames;
+
+void Elapse()
+{
+    for (auto& [_, info] : frames)
+    {
+        info.timestamp++;
+    }
+}
 
 int main()
 {
@@ -17,52 +27,37 @@ int main()
     int n, m;
     std::cin >> n >> m;
     
-    std::map<int, info> frames;
-    
-    int cnt = 0;
     for (int i = 0; i < m; i++)
     {
-        for (auto& [id, info] : frames)
-        {
-            info.time++;
-        }
+        Elapse();
         
-        int student_id;
-        std::cin >> student_id;
+        int nominated_id;
+        std::cin >> nominated_id;
         
-        if (frames.find(student_id) != frames.end())
+        if (frames.count(nominated_id))
         {
-            frames[student_id].nominated++;
+            frames[nominated_id].nominated++;
         }
         else
         {
-            if (cnt >= n)
+            if (frames.size() >= n)
             {
-                info min_info { INT_MAX, 0 };
-                int min_id;
-                for (const auto& [id, info] : frames)
+                int target_id = -1;
+                info min_val { MAX, MAX };
+                
+                for (const auto& [cur_id, cur_info] : frames)
                 {
-                    if (min_info.nominated > info.nominated)
+                    if (min_val.nominated > cur_info.nominated || (min_val.nominated == cur_info.nominated && min_val.timestamp < cur_info.timestamp))
                     {
-                        min_info.nominated = info.nominated;
-                        min_info.time = info.time;
-                        min_id = id;
-                    }
-                    else if (min_info.nominated == info.nominated && min_info.time < info.time)
-                    {
-                        min_info.time = info.time;
-                        min_id = id;
+                        min_val = cur_info;
+                        target_id = cur_id;
                     }
                 }
                 
-                frames.erase(min_id);
-                frames[student_id] = info{1, 0};
+                frames.erase(target_id);
             }
-            else
-            {
-                frames[student_id] = info{1, 0};
-                cnt++;
-            }
+            
+            frames[nominated_id] = info{1, 0};
         }
     }
     
