@@ -8,14 +8,7 @@ void Divide(double n)
         Divide(ceil(n / -2));
     }
     
-    if (n == 0)
-    {
-        std::cout << '1';
-    }
-    else
-    {
-        std::cout << abs(static_cast<int>(n) % 2);
-    }
+    std::cout << abs(static_cast<int>(n) % 2);
 }
 
 int main()
