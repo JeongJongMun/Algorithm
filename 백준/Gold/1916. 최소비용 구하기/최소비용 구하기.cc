@@ -1,43 +1,64 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <queue>
+#include <cstring>
 using namespace std;
-vector<pair<int, int>> graph[1001];
+struct Edge
+{
+    int end;
+    int cost;
 
-int Dijkstra(int start, int end) {
-	vector<int> visited(1001, 0);
-	vector<int> dist(1001, INT_MAX);
-	dist[start] = 0;
-	priority_queue<pair<int, int>> pq;
-	pq.emplace(0, start);
+    Edge(int e, int c) : end(e), cost(c) {}
 
-	while (!pq.empty()) {
-		int cost = -pq.top().first;
-		int node = pq.top().second;
-		pq.pop();
-		if (node == end) break;
+    bool operator<(const Edge& e) const
+    {
+        return this->cost > e.cost;
+    }
+};
 
-		visited[node] = 1;
-		for (int i = 0; i < graph[node].size(); i++) {
-			int next_cost = graph[node][i].first;
-			int next_node = graph[node][i].second;
-			if (dist[next_node] > cost + next_cost and !visited[next_node]) {
-				dist[next_node] = cost + next_cost;
-				pq.emplace(-dist[next_node], next_node);
-			}
-		}
-	}
+int N, M;
+vector<vector<Edge>> adj(1001);
+vector<int> distances(1001, 1e9);
+vector visit(1001, false);
 
-	return dist[end];
+int dijkstra(int start, int end)
+{
+    priority_queue<Edge> pq;
+
+    distances[start] = 0;
+    pq.emplace(start, 0);
+
+    while (!pq.empty())
+    {
+        auto [cur, cost] = pq.top(); pq.pop();
+        if (visit[cur]) continue;
+        
+        for (auto [next, dist] : adj[cur])
+        {
+            if (distances[next] > distances[cur] + dist)
+            {
+                visit[cur] = true;
+                distances[next] = distances[cur] + dist;
+                pq.emplace(next, distances[next]);
+            }
+        }
+        
+    }
+    
+    return distances[end];
 }
 
-int main() {
-	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-	int v, e; cin >> v >> e;
-	for (int i = 0; i < e; i++) {
-		int a, b, c; cin >> a >> b >> c;
-		graph[a].emplace_back(c, b);
-	}
-	int start, end; cin >> start >> end;
-	cout << Dijkstra(start, end);
+int main()
+{
+    ios::sync_with_stdio(false); cin.tie(nullptr);
+    cin >> N >> M;
+    for (int i = 0; i < M; i++)
+    {
+        int s, e, c; cin >> s >> e >> c;
+        adj[s].emplace_back(e, c);
+    }
+    int start, end; cin >> start >> end;
 
-	return 0;
+    cout << dijkstra(start, end) << '\n';
+    
+    return 0;
 }
