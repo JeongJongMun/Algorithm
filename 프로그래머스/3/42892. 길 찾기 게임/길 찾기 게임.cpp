@@ -5,13 +5,12 @@
 struct Node
 {
     int x;
-    int y;
     int number;
     Node* left = nullptr;
     Node* right = nullptr;
     
-    Node(const int x, const int y, const int number) 
-    : x(x), y(y), number(number) { }
+    Node(const int x, const int number) 
+    : x(x), number(number) { }
 };
 
 void insert_node(Node* parent, Node* child)
@@ -68,16 +67,16 @@ std::vector<std::vector<int>> solution(std::vector<std::vector<int>> nodeinfo)
     }
     
     // Y가 큰 순으로 정렬하되, Y가 같다면 X가 작은 순으로 정렬
-    std::sort(nodeinfo.begin(), nodeinfo.end(), [](const std::vector<int>& a, std::vector<int> b)
+    std::sort(nodeinfo.begin(), nodeinfo.end(), [](const std::vector<int>& a, const std::vector<int>& b)
     {
         return a[1] != b[1] ? a[1] > b[1] : a[0] < b[0];
     });
     
     // 트리 생성
-    Node* root = new Node(nodeinfo[0][0], nodeinfo[0][1], nodeinfo[0][2]);
+    Node* root = new Node(nodeinfo[0][0], nodeinfo[0][2]);
     for (int i = 1; i < n; i++)
     {
-        Node* child = new Node(nodeinfo[i][0], nodeinfo[i][1], nodeinfo[i][2]);
+        Node* child = new Node(nodeinfo[i][0], nodeinfo[i][2]);
         insert_node(root, child);
     }
 
