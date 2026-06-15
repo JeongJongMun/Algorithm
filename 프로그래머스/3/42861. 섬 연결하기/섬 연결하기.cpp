@@ -4,11 +4,10 @@
 
 struct Edge
 {
-    int s;
     int e;
     int c;
     
-    Edge(int start, int end, int cost) : s(start), e(end), c(cost) { }
+    Edge(int end, int cost) : e(end), c(cost) { }
     
     bool operator<(const Edge& other) const
     {
@@ -22,8 +21,8 @@ int solution(int n, std::vector<std::vector<int>> costs)
     std::vector<std::vector<Edge>> graph(n, std::vector<Edge>());
     for (const auto& cost : costs)
     {
-        graph[cost[0]].emplace_back(cost[0], cost[1], cost[2]);
-        graph[cost[1]].emplace_back(cost[1], cost[0], cost[2]);
+        graph[cost[0]].emplace_back(cost[1], cost[2]);
+        graph[cost[1]].emplace_back(cost[0], cost[2]);
     }
     std::vector<bool> visited(n, false);
     visited[0] = true;
