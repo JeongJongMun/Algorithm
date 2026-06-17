@@ -1,45 +1,34 @@
 #include <string>
 #include <vector>
-#include <iostream>
 #include <algorithm>
 
-// 26^0 ~ 26^1 = a ~ z
-// 26^1 + 1 ~ 26^2 = aa ~ zz
-// 27 ~ 676
-// 27 ~ 52 = aa ~ az
-// 26^2 + 1 ~ 26^3 = aaa ~ zzz
 std::string find_n_spell(long long n)
 {
     n--;
     
     int length = 1;
-    long long count_at_length = 26;
+    long long count = 26;
 
-    while (n >= count_at_length)
+    while (n >= count)
     {
-        n -= count_at_length;
+        n -= count;
         length++;
-        count_at_length *= 26;
+        count *= 26;
     }
     
     std::string spell = "";
     for (int i = length; i > 0; i--)
     {
-        long long num = 1;
-        for (int j = 0; j < i - 1; j++)
-        {
-            num *= 26;
-        }
-
-        int alphabet = n / num;
+        count /= 26;
+        int alphabet = n / count;
         spell += (char)('a' + alphabet);
-        n %= num;
+        n %= count;
     }
 
     return spell;
 }
 
-bool compare(const std::string a, const std::string b)
+bool compare(const std::string& a, const std::string& b)
 {
     if (a.size() != b.size())
     {
@@ -52,13 +41,14 @@ std::string solution(long long n, std::vector<std::string> bans)
 {
     std::sort(bans.begin(), bans.end(), compare);
     
-    int index = 0;
-    while (index != std::upper_bound(bans.begin(), bans.end(), find_n_spell(n + index), compare) - bans.begin())
+    int idx = 0;
+    while (true)
     {
-        std::string spell = find_n_spell(n + index);
+        std::string spell = find_n_spell(n + idx);
         auto iter = std::upper_bound(bans.begin(), bans.end(), spell, compare);
-        index = iter - bans.begin();
-    }
-
-    return find_n_spell(n + index);
+        int upper_idx = iter - bans.begin();
+        
+        if (idx == upper_idx) return spell;
+        idx = upper_idx;
+    }    
 }
