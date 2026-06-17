@@ -1,6 +1,4 @@
-#include <string>
 #include <vector>
-#include <iostream>
 
 using namespace std;
 
@@ -42,16 +40,8 @@ int solution(int n, int s, int a, int b, vector<vector<int>> fares)
     
     floyd(graph);
     
-        
-    // for (int i = 1; i <= n; i++)
-    // {
-    //     for (int j = 1; j <= n; j++)
-    //     {
-    //         cout << i << " -> " << j << " : " << graph[i][j] << '\n';
-    //     }
-    // }
-    
     int answer = 100000000;
+    
     for (int k = 1; k <= n; k++)
     {
         for (int i = 1; i <= n; i++)
