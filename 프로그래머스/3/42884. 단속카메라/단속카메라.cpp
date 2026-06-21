@@ -6,37 +6,22 @@ using namespace std;
 
 int solution(vector<vector<int>> routes) 
 {
-    int answer = 0;
-    
     sort(routes.begin(), routes.end(), [](const vector<int>& a, const vector<int>& b)
      {
-         if (a[0] != b[0])
-         {
-             return a[0] > b[0];         
-         }
-         return a[1] > b[1];
+         return a[1] < b[1];
      });
 
-    int enter = 0;
-    int index = 0;
-    int n = routes.size();
-    
-    while (true)
+    int exit = -30001;
+    int answer = 0;
+    for (int i = 0; i < routes.size(); i++)
     {
-        enter = routes[index][0];
-        answer++;
-                
-        while (index < n - 1 && routes[index][1] >= enter)
+        if (exit < routes[i][0])
         {
-            index++;
-        }
-        
-        if (index >= n - 1)
-        {
-            if (routes[index][1] < enter) answer++;            
-            break;
+            answer++;
+            exit = routes[i][1];
         }
     }
-    
+
+   
     return answer;
 }
